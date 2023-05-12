@@ -1,0 +1,21 @@
+curl 'https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelOrderSummaryController' \
+  -H 'authority: www.mediamarkt.com.tr' \
+  -H 'accept: application/json' \
+  -H 'accept-language: tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -H 'cookie: JSESSIONID=0000Vv5Ogo_zS6w8qhhmQeTMxeM:1fif0ekgh; MC_DEVICE_ID=-1; MC_DEVICE_ID_EXT=-1; WC_SESSION_ESTABLISHED=true; TS014d30d0=014cde7230f131f7d3fae5ab4b09a22bea73a3cd65d40f0bae9032710cf827ccadf3d129db192e04590ce227675e480d86a5626085; BVBRANDID=819439bc-f1e6-41e3-89a9-afcb45299dd6; MC_PS_CHANNEL_ID=desktop; MC_PS_USER_ID=1671694388749-140958; MC_PRIVACY=marketing; retailerVisitorId=263fb40b-4d9a-407b-9f54-0ce2a4e101c2; dtCookie=v_4_srv_11_sn_2156B5B8D4D1CF643734697BF4C81CC9_perc_100000_ol_0_mul_1_app-3A275d25ae0606b607_1; TS01e37295=014cde7230831de66cea426f02cd32e973bfae7c2f284ed967c9c060e0d83c036d99ded987d4536c3d6ee82d1571ebe9586bb6e82befa52592451adcb37e2b70d6822c4cec; BVImplmain_site=19447; MC_PS_SESSION_ID=Vv5Ogo_zS6w8qhhmQeTMxeM; TSdbe8a455027=08381b7c0bab2000081af9b6a1665f3ea52eb8b7f185a6cb440af99a1c696b7eab7436fc5be72f8f0838bfa86c113000427c39fe454aa662548153a1c5b106e9872243e856de0071f9bb7b9767554cb217e0bef7e626bfec2abc393ad5bbbc0c; TS01c09a37030=0150c1676c738ea95398bd2db2319ab1a4b9b2a80c713024306d4dfb7bc060b008fab647564895a5dd9a0fb1fada5bf3ff326c543c; WC_AUTHENTICATION_1857380699=1857380699%2CuE%2Bw8S0ZNq9JOEECVx5AuUhK6aI%3D; WC_PERSISTENT=XbsKYzo%2B26kd062ujYKqDSWort4%3D%0A%3B2023-05-12+21%3A54%3A02.463_1671694388749-140958_103452_1857380699%2C-14%2CTRY%2C_103452; WC_ACTIVEPOINTER=-14%2C103452; MC_USER_ID=1857380699; MC_USERTYPE=R; MC_SSO_TOKEN=pdK3lFBIuj%252BvZxdPLYTpiWjODicSdGProFrZl8C3C88GITP%252FoGlfxEpQjqmKk%252BB3el4rHuJN0n75CcWVNRHy%252BjOARjy0f5BbiKz5ZY%252FcDUA%253D; TS0173859f=014cde7230768729f530e9cf45afe24dac786cd0450069e6ef4805932d589410ab83a61660a9a54712a0c8b26a963e42fda6d07ab6; TS01c09a37=014cde72303f7ec73fe2a4c0e1c6026430c33905d7274ded20851a41c7695a40b0b0ae28602042c40016c951ef283d9ff7c49385c7; WC_USERACTIVITY_1857380699=1857380699%2C103452%2C0%2Cnull%2C1683921242918%2C1683925086934%2Cnull%2Cnull%2Cnull%2Cnull%2C3DsJ3BaqBRiEoVPm4jbABKe5HW3d7LZcpQOVcr%2BE399yvp%2FHNwnsdpAAQ%2BR2%2FrneC4ndMm30W9r9yLrxu%2FUgAXNjjHm03nlAgAvNINgq7L%2FYHbOm58GR3ix27KpwSqXVTRT2qw18q6zvKq6ss9ybzvUvfiN2qz6rqkTnxqRmB1vSM%2Fzm5QffLHg5kT5Ewy0LE%2Fgy55zH26jtYT2OpHQDy3vvY6aIIYDf3VPiGWcm%2Fgg%3D; TSef0f0ccc027=08381b7c0bab20000d9f89391d568a08aaeb49af9f0b1ea81c023f4a7c811a4f1a8b79f23d761830085924bc2e11300062ed22ca739cc51a22a812ea17994bda695a5bfd59d2d8868be3cfc75a78a2f89a5bbc210b0645ea08fc0eb0f0bad257' \
+  -H 'origin: https://www.mediamarkt.com.tr' \
+  -H 'pragma: no-cache' \
+  -H 'referer: https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelOrderSummary?storeId=103452&orderId=579805653&langId=-14&rememberMe=true' \
+  -H 'sec-ch-ua: "Brave";v="113", "Chromium";v="113", "Not-A.Brand";v="24"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-gpc: 1' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'storeId=103452&langId=-14&orderId=579805653&shipModeId=-136001&country=T%C3%BCrkiye&salutation=Mr&firstLastnameCombined=Muhammet+Da%C4%9F&businessTitle=&firstName=Muhammet&lastName=Da%C4%9F&street=%C4%B0SP%C4%B0R+KAR%C5%9EIYAKA+MAH.+M%C3%9CFT%C3%9C+BA%C5%9EKAPAN+CAD.+DA%C4%9E+T%C4%B0C.&streetType=&housenumber=.&addressAdditional=&district=%C4%B0spir&zip=25900&city=Erzurum&city_id=-31&district_id=-432&county_id=-27873&contactPerson=&shippingAddressNicknameshipping=36%23a.yldrm%40outlook.com.tr1672235368260&packstationNum=.&postNum=&postofficeName=&value=DELIVERY&submethod=shipping&method=saveDeliveryData' \
+  --compressed

@@ -1,0 +1,29 @@
+import requests
+
+url = "https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelOrderSummaryController"
+
+payload = 'storeId=103452&langId=-14&orderId=579805653&pass1=&birthMonth=8&lastName=Yildirim&pass2=&street=M%C3%BCft%C3%BC%2Bba%C5%9Fkapan%2Bcad.%2BDa%C4%9F%2BTicaret&loyaltyClubAge=18&validationAge=18&corporateForm=null&district=%C4%B0spir&addressAddition=&customerContract=false&loyaltyClubPhysical=false&isNewsletterAtRegistrationActive=false&channelsactive=false&firstLastnameCombined=Alis%2BYildirim&country=T%C3%BCrkiye&defaultCountry=TR&loyaltyClubPreferredStoreId=&loyaltyClubSelected=false&salutation=Mr&firstName=Alis&birthYear=1990&email=a.yldrm%40outlook.com.tr&birthDay=1&formType=personal%2Bform&loyaltyClubMode=register&zip=25900&mobile=%2B905308786722&taxId=24700743456&privateTaxId=24700743456&isGuestRegistration=false&companyName=&housenumber=.&city=Erzurum&phone=&isUserRegistration=false&businessTitle=&showCaptcha=false&city_id=-31&district_id=-432&county_id=-27869&isAddressComplete=true&method=savePersonalData'
+headers = {
+  'authority': 'www.mediamarkt.com.tr',
+  'accept': 'application/json',
+  'accept-language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
+  'cache-control': 'no-cache',
+  'content-type': 'application/x-www-form-urlencoded',
+  'cookie': 'JSESSIONID=0000Vv5Ogo_zS6w8qhhmQeTMxeM:1fif0ekgh; MC_DEVICE_ID=-1; MC_DEVICE_ID_EXT=-1; WC_SESSION_ESTABLISHED=true; TS014d30d0=014cde7230f131f7d3fae5ab4b09a22bea73a3cd65d40f0bae9032710cf827ccadf3d129db192e04590ce227675e480d86a5626085; BVBRANDID=819439bc-f1e6-41e3-89a9-afcb45299dd6; MC_PS_CHANNEL_ID=desktop; MC_PS_USER_ID=1671694388749-140958; MC_PRIVACY=marketing; retailerVisitorId=263fb40b-4d9a-407b-9f54-0ce2a4e101c2; dtCookie=v_4_srv_11_sn_2156B5B8D4D1CF643734697BF4C81CC9_perc_100000_ol_0_mul_1_app-3A275d25ae0606b607_1; TS01e37295=014cde7230831de66cea426f02cd32e973bfae7c2f284ed967c9c060e0d83c036d99ded987d4536c3d6ee82d1571ebe9586bb6e82befa52592451adcb37e2b70d6822c4cec; BVImplmain_site=19447; MC_PS_SESSION_ID=Vv5Ogo_zS6w8qhhmQeTMxeM; TSdbe8a455027=08381b7c0bab2000081af9b6a1665f3ea52eb8b7f185a6cb440af99a1c696b7eab7436fc5be72f8f0838bfa86c113000427c39fe454aa662548153a1c5b106e9872243e856de0071f9bb7b9767554cb217e0bef7e626bfec2abc393ad5bbbc0c; TS01c09a37=014cde72302f95b0bba65e0e51d77dfcab78782f4f436bf744ed64849619620865cddf662141145cd88aaedc828e80e9040bdd4c73; TS01c09a37030=0150c1676c738ea95398bd2db2319ab1a4b9b2a80c713024306d4dfb7bc060b008fab647564895a5dd9a0fb1fada5bf3ff326c543c; WC_AUTHENTICATION_1857380699=1857380699%2CuE%2Bw8S0ZNq9JOEECVx5AuUhK6aI%3D; WC_PERSISTENT=XbsKYzo%2B26kd062ujYKqDSWort4%3D%0A%3B2023-05-12+21%3A54%3A02.463_1671694388749-140958_103452_1857380699%2C-14%2CTRY%2C_103452; WC_ACTIVEPOINTER=-14%2C103452; WC_USERACTIVITY_1857380699=1857380699%2C103452%2C0%2Cnull%2C1683921242918%2C1683924842918%2Cnull%2Cnull%2Cnull%2Cnull%2CmsZl1mQPTuERlILXninFUz4FWIg0vWztlhiHfnxcOxHWM8KGVL8ATTiejBVXhxM8s7ku%2BGeLGAP55Kyjn%2FnUQm7NkHpy7EZ44VHcpB1Jes7Wn3o9IC54xSbP08V8iN%2BlTqTreZadJcKMhwWxt1VelBCO4gUL7BoZ5yPD7qqcj5vFLhtFoWWvXZn2UFtLuVPC8O76etmVASRFZHdqXLC812KEyaqIDdzXSicLtSGXbfc%3D; MC_USER_ID=1857380699; MC_USERTYPE=R; MC_SSO_TOKEN=pdK3lFBIuj%252BvZxdPLYTpiWjODicSdGProFrZl8C3C88GITP%252FoGlfxEpQjqmKk%252BB3el4rHuJN0n75CcWVNRHy%252BjOARjy0f5BbiKz5ZY%252FcDUA%253D; TS0173859f=014cde7230768729f530e9cf45afe24dac786cd0450069e6ef4805932d589410ab83a61660a9a54712a0c8b26a963e42fda6d07ab6; TSef0f0ccc027=08381b7c0bab20002c0c3b78b59bcca5c17e8e13c3933e0bc7676a689f5c626a3a5b9d59a79fd927086812d23c113000cabcbefdd92f622b657cfacd21cf3a95830f1280d665254167ee2a3d52d29a900f711ff211d411cac402c7b2207e1b95; MC_DEVICE_ID_EXT=-1; TS014d30d0=014cde72305c05cb0bedf9116b9ccac6ed04b70de7c4a4d0d38950e8c338409292eac0b3ad987e232ef26252ea9104f075f0da00fa; JSESSIONID=0000ldS7EXWKHI_QeJOyFLN98UD:1cleanf7c; MC_DEVICE_ID=-1; TS01c09a37=014cde72301a6279e3062ae98a046790a6e84c4164316ce984f44631617d8bb5ba408030d5a7d6e4e0f0d937ce521251e34053990a; TS01c09a37030=0150c1676c202ab23dfc23dac71ea1af6ac325c624581a98ea7dffdcb9d81a37222ce68d069a66d144952919ad7634e6c83ac85993; TSdbe8a455027=08381b7c0bab2000e707137a1b851ea00bac7016877a02e27cfc842d134efc3f5fdd0877b25031c0084415674011300026ab62e59beb8b248a9569797a302aaff62f932632b5583e654af77a4692b1e4f75e4a4bac576e1dfa2cce0e33439526; WC_ACTIVEPOINTER=-14%2C103452; WC_AUTHENTICATION_1857380699=1857380699%2CuE%2Bw8S0ZNq9JOEECVx5AuUhK6aI%3D; WC_PERSISTENT=Vl%2B%2Fdbz8au7JpuUpRU4GXNPuFsA%3D%0A%3B2023-05-12+21%3A26%3A23.223_1671694388749-140958_103452_1857380699%2C-14%2CTRY%2C_103452; WC_SESSION_ESTABLISHED=true; WC_USERACTIVITY_1857380699=1857380699%2C103452%2C0%2Cnull%2C1683919583424%2C1683924159414%2Cnull%2Cnull%2Cnull%2Cnull%2CYLtu%2FUqtAqGrUQT2Mevg1bWxxbVVXiWCoODVe21B6rpbgTpTpz7IwjWQfwiMJTyBZg1f9cWK9uVXaDvxWjcFsMqBIFBnTNtozwY9nWJ%2FPH1bnq%2FzbjwkO7EXI08%2FLLsQhGoaPJEgANwVvd4LJx11RSdbcTCMtN6ERj8bQ4MrjucOlgKnImqLdrI%2FwkXFl%2Bb%2B7laBz2JAG0nsSoJVMsBDVjbBSLr84jwEPRxkLrqKgrw%3D',
+  'origin': 'https://www.mediamarkt.com.tr',
+  'pragma': 'no-cache',
+  'referer': 'https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelOrderSummary?storeId=103452&orderId=579805653&langId=-14&rememberMe=true',
+  'sec-ch-ua': '"Brave";v="113", "Chromium";v="113", "Not-A.Brand";v="24"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'sec-fetch-dest': 'empty',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-site': 'same-origin',
+  'sec-gpc': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+  'x-requested-with': 'XMLHttpRequest'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
