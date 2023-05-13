@@ -2,6 +2,10 @@ from MediaMarkt import MM
 
 mm = MM()
 
+random_city = mm.get_city()
+random_district = mm.get_district(random_city["id"])
+random_neighborhood = mm.get_district(random_district["id"])
+
 mm.login("a.yldrm@outlook.com.tr", "Yldrm!34")
 
 basket_detail = mm.check_pre_basket("https://www.mediamarkt.com.tr/tr/product/_x515ea-bq2293w-core-i3-1115g4-i%C5%9Flemci-4gb-ram-128gb-ssd-15-6-w%C4%B1n11-laptop-gri-1222608.html")

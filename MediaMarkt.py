@@ -1,3 +1,4 @@
+import random
 from urllib.parse import urlencode
 
 import requests as requests
@@ -7,8 +8,15 @@ import re
 class MM:
 
     def __init__(self):
-        self.storeId = None
+        self.basket = None
+        self.streets = None
         self.session = requests.session()
+        self.load_streets()
+
+    def load_streets(self):
+        with open("street.txt","r") as f:
+            self.streets = f.readlines()
+            f.close()
 
     def visit_first(self):
         self.session.get("https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/LogonForm")
@@ -66,7 +74,7 @@ class MM:
             "quantity": 1
         }
 
-        self.storeId = product_input.attrs['data-storeid']
+        self.basket = product_detail
 
         return product_detail
 
@@ -91,14 +99,11 @@ class MM:
 
     def get_order_id(self):
 
-        cookie_string = "; ".join([str(x) + "=" + str(y) for x, y in self.session.cookies.items()])
-
         headers = {
             'authority': 'www.mediamarkt.com.tr',
             'accept': '*/*',
             'accept-language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
             'cache-control': 'no-cache',
-            # 'cookie': cookie_string,
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36'
         }
 
@@ -110,3 +115,75 @@ class MM:
             return order_id[0].replace("orderId=", "")
         else:
             return None
+
+    def get_city(self):
+
+        city_req = requests.get("https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelAddressSelectorValues?storeId=103452&langId=-14")
+
+        if city_req.status_code == 200:
+
+            city_response = city_req.json()
+
+            return random.choice(city_response["content"])
+
+    def get_district(self, parent_id: str):
+
+        city_req = requests.get(f"https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelAddressSelectorValues?storeId=103452&langId=-14&parentId={parent_id}")
+
+        if city_req.status_code == 200:
+
+            city_response = city_req.json()
+
+            return random.choice(city_response["content"])
+
+    def set_invoice_address(self, il, ilce, mahalle, order_id):
+
+        url = "https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelOrderSummaryController"
+
+        data = {
+            'storeId': self.basket["storeId"],
+            'langId': '-14',
+            'orderId': order_id,
+            'lastName': 'Yildirim',
+            'street': 'Müftü+başkapan+cad.+Dağ+Ticaret',
+            'corporateForm': 'null',
+            'district': ilce["name"],
+            'addressAddition': '',
+            'channelsactive': 'false',
+            'firstLastnameCombined': 'Alis+Yildirim',
+            'country': 'Türkiye',
+            'defaultCountry': 'TR',
+            'loyaltyClubSelected': 'false',
+            'salutation': 'Mr',
+            'firstName': 'Aliy',
+            'formType': 'personal+form',
+            'loyaltyClubMode': 'register',
+            'zip': '22700',
+            'mobile': '+905555555555',
+            'taxId': '25180488332',
+            'privateTaxId': '25180488332',
+            'isGuestRegistration': 'false',
+            'housenumber': '.',
+            'city': il["name"],
+            'isUserRegistration': 'false',
+            'showCaptcha': 'false',
+            'city_id': il["id"],
+            'district_id': ilce["id"],
+            'county_id': '-24784',
+            'isAddressComplete': 'true',
+            'method': 'savePersonalData'
+        }
+
+        # payload = 'zip=25900&mobile=%2B905308786722&taxId=24700743456&privateTaxId=24700743456&isGuestRegistration=false&companyName=&housenumber=.&city=Erzurum&phone=&isUserRegistration=false&businessTitle=&showCaptcha=false&city_id=-31&district_id=-432&county_id=-27869&isAddressComplete=true&method=savePersonalData'
+        headers = {
+            'authority': 'www.mediamarkt.com.tr',
+            'accept': 'application/json',
+            'accept-language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'origin': 'https://www.mediamarkt.com.tr',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+            'x-requested-with': 'XMLHttpRequest'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=data)
