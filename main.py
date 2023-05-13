@@ -14,4 +14,6 @@ mm.add_basket(basket_detail)
 
 order_id = mm.get_order_id()
 
+mm.set_invoice_address(il=random_city, ilce=random_district, mahalle=random_neighborhood, order_id=order_id)
+
 print(order_id)
