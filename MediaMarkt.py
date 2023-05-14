@@ -1,3 +1,4 @@
+import os
 import random
 import time
 from http.cookiejar import Cookie
@@ -13,10 +14,8 @@ from selenium.webdriver.common.by import By
 class MM:
 
     def __init__(self):
-
-        self.driver_options = uc.ChromeOptions()
-        self.driver_options.headless = True
-        self.driver = uc.Chrome(options=self.driver_options, version_main=108)
+        os.system("taskkill /im chrome* /f")
+        self.driver = uc.Chrome()
         self.cookie_string = None
         self.basket = None
         self.streets = None
@@ -54,13 +53,16 @@ class MM:
             f.close()
 
     def page_is_loading(self):
+        start = time.time()
         while True:
+            delta = time.time() - start
+            if delta >= 35:
+                break
+
             time.sleep(1)
             x = self.driver.execute_script("return document.readyState")
             if x == "complete":
                 return True
-            else:
-                yield False
 
     def login(self, username: str, password: str):
         self.driver.get("https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/LogonForm")
@@ -189,18 +191,18 @@ class MM:
             'storeId': self.basket["storeId"],
             'langId': '-14',
             'orderId': order_id,
-            'lastName': last_name,
+            'lastName': last_name + "Akok",
             'street': mahalle["name"],
             'corporateForm': 'null',
             'district': ilce["name"],
             'addressAddition': '',
             'channelsactive': 'false',
-            'firstLastnameCombined': f'{first_name} {last_name}',
+            'firstLastnameCombined': f'{first_name}Fatih {last_name}Akok',
             'country': 'Türkiye',
             'defaultCountry': 'TR',
             'loyaltyClubSelected': 'false',
             'salutation': 'Mr',
-            'firstName': first_name,
+            'firstName': first_name + "Fatih",
             'formType': 'personal form',
             'loyaltyClubMode': 'register',
             'zip': '22700',
@@ -255,7 +257,7 @@ class MM:
             'shipModeId': '-136001',
             'country': 'Türkiye',
             'salutation': 'Mr',
-            'firstLastnameCombined': first_name + " " + last_name,
+            'firstLastnameCombined': f"{first_name} {last_name}",
             'businessTitle': '',
             'firstName': first_name,
             'lastName': last_name,
@@ -297,3 +299,13 @@ class MM:
             print("Teslimat adresi güncellendi.")
         else:
             print("Teslimat adresi güncellenemedi.")
+
+    def remove_product(self):
+        self.driver.get("https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelDisplayBasket")
+        self.page_is_loading()
+
+        remove_buttons = self.driver.find_elements(By.XPATH, "//button[@class='cproduct-actions-remove']")
+
+        for remove_button in remove_buttons:
+            remove_button.click()
+            time.sleep(0.5)
