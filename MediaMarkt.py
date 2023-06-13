@@ -1,6 +1,7 @@
 import os
 import random
 import time
+import traceback
 from http.cookiejar import Cookie
 from urllib.parse import urlencode
 
@@ -8,7 +9,10 @@ import requests as requests
 from bs4 import BeautifulSoup
 import re
 import undetected_chromedriver as uc
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+import selenium.webdriver.support.expected_conditions as ec
 
 
 class MM:
@@ -66,11 +70,16 @@ class MM:
 
     def login(self, username: str, password: str):
         self.driver.get("https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/LogonForm")
+        print("Login form loading")
         self.page_is_loading()
+        print("Login form loaded")
 
-        username_el = self.driver.find_element(By.XPATH, "//input[@id='login-email']")
-        pass_el = self.driver.find_element(By.XPATH, "//input[@id='login-password']")
-        btn_login = self.driver.find_element(By.XPATH, "//button[@id='my-account-action-login']")
+        username_el = WebDriverWait(self.driver, 15).until(ec.visibility_of_element_located((By.XPATH, "//input[@id='login-email']")))
+        # username_el = self.driver.find_element(By.XPATH, "//input[@id='login-email']")
+        pass_el = WebDriverWait(self.driver, 15).until(ec.visibility_of_element_located((By.XPATH, "//input[@id='login-password']")))
+        # pass_el = self.driver.find_element(By.XPATH, "//input[@id='login-password']")
+        btn_login = WebDriverWait(self.driver, 15).until(ec.visibility_of_element_located((By.XPATH, "//button[@id='my-account-action-login']")))
+        # btn_login = self.driver.find_element(By.XPATH, "//button[@id='my-account-action-login']")
 
         username_el.send_keys(username)
         pass_el.send_keys(password)
@@ -191,24 +200,24 @@ class MM:
             'storeId': self.basket["storeId"],
             'langId': '-14',
             'orderId': order_id,
-            'lastName': last_name + "Akok",
+            'lastName': last_name,# + "Akok",
             'street': mahalle["name"],
             'corporateForm': 'null',
             'district': ilce["name"],
             'addressAddition': '',
             'channelsactive': 'false',
-            'firstLastnameCombined': f'{first_name}Fatih {last_name}Akok',
+            'firstLastnameCombined': f'{first_name} {last_name}',
             'country': 'Türkiye',
             'defaultCountry': 'TR',
             'loyaltyClubSelected': 'false',
             'salutation': 'Mr',
-            'firstName': first_name + "Fatih",
+            'firstName': first_name,# + "Fatih",
             'formType': 'personal form',
             'loyaltyClubMode': 'register',
             'zip': '22700',
-            'mobile': '+905555555555',
-            'taxId': '25180488332',
-            'privateTaxId': '25180488332',
+            'mobile': f'+90509{random.randint(1234567,5678901)}',
+            'taxId': '13773032994',
+            'privateTaxId': '13773032994',
             'isGuestRegistration': 'false',
             'housenumber': '.',
             'city': il["name"],
@@ -307,5 +316,9 @@ class MM:
         remove_buttons = self.driver.find_elements(By.XPATH, "//button[@class='cproduct-actions-remove']")
 
         for remove_button in remove_buttons:
-            remove_button.click()
-            time.sleep(0.5)
+            try:
+                remove_button.click()
+                time.sleep(0.5)
+            except:
+                print("Ürün sepetten silinirken hata oluştu.")
+                traceback.print_exc()

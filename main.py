@@ -13,10 +13,9 @@ print(f"{len(maillist)} adet kadar mail adresi var")
 urun_linki = input(
     "Ürün linki giriniz :") or "https://www.mediamarkt.com.tr/tr/product/_samsung-vr3mb77312k-robot-s%C3%BCp%C3%BCrge-1228770.html"
 
-step = 1
-for i in range(len(maillist)):
+for i, v in enumerate(maillist):
     try:
-        mail_line = maillist[step]
+        mail_line = v
         email_address = mail_line.split(":")[0]
         password = mail_line.split(":")[1]
 
@@ -40,10 +39,10 @@ for i in range(len(maillist)):
         mm.remove_product()
         mm.finish()
 
-        print("30 sn beklenecek")
-        sleep(30)
+        print("50 sn beklenecek")
+        sleep(50)
         print("Sonraki hesaba geçiliyor")
-        step += step + 1
+        i = i + 1
     except:
-        step = step - 1
+        i = i - 1
         traceback.print_exc()
