@@ -8,6 +8,12 @@ with open("maillist.txt", "r") as fmail:
     maillist = fmail.read().splitlines()
     fmail.close()
 
+
+def changed_emails(mail):
+    with open("changedmails.txt", "w") as fmail:
+        fmail.write("{}\n".format(mail))
+        fmail.close()
+
 print(f"{len(maillist)} adet kadar mail adresi var")
 
 urun_linki = input(
@@ -36,6 +42,7 @@ for i, v in enumerate(maillist):
 
         mm.set_invoice_address(il=random_city, ilce=random_district, mahalle=random_neighborhood, order_id=order_id)
         mm.set_delivery_address(order_id=order_id)
+        changed_emails(email_address)
         mm.remove_product()
         mm.finish()
 

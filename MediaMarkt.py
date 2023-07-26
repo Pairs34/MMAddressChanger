@@ -313,7 +313,7 @@ class MM:
         self.driver.get("https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelDisplayBasket")
         self.page_is_loading()
 
-        remove_buttons = self.driver.find_elements(By.XPATH, "//button[@class='cproduct-actions-remove']")
+        remove_buttons = self.driver.find_elements(By.XPATH, "//button[@class='delete-item']")
 
         for remove_button in remove_buttons:
             try:
