@@ -20,7 +20,7 @@ def remove_changed_mail(mail):
         d = f.readlines()
         f.seek(0)
         for i in d:
-            if i != mail:
+            if not mail in i:
                 f.write(i)
         f.truncate()
 
@@ -58,7 +58,7 @@ for i, v in enumerate(maillist):
                                mahalle=random_neighborhood, order_id=order_id, tc=tcno)
         mm.set_delivery_address(order_id=order_id)
         changed_emails(email_address)
-        remove_changed_mail()
+        remove_changed_mail(email_address)
         mm.remove_product()
         mm.finish()
 

@@ -324,11 +324,12 @@ class MM:
 
         # remove_buttons = self.driver.find_elements(By.XPATH, "//button[@class='delete-item']")
         remove_buttons = WebDriverWait(self.driver, 15).until(
-            ec.visibility_of_element_located((By.XPATH, "//button[@class='delete-item']")))
+            ec.visibility_of_all_elements_located((By.XPATH, "//button[contains(@class,'delete-item')]")))
 
         for remove_button in remove_buttons:
             try:
-                remove_button.click()
+                self.driver.execute_script(
+                    "arguments[0].click();", remove_button)
                 time.sleep(0.5)
             except:
                 print("Ürün sepetten silinirken hata oluştu.")
