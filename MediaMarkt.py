@@ -69,16 +69,20 @@ class MM:
                 return True
 
     def login(self, username: str, password: str):
-        self.driver.get("https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/LogonForm")
+        self.driver.get(
+            "https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/LogonForm")
         print("Login form loading")
         self.page_is_loading()
         print("Login form loaded")
 
-        username_el = WebDriverWait(self.driver, 15).until(ec.visibility_of_element_located((By.XPATH, "//input[@id='login-email']")))
+        username_el = WebDriverWait(self.driver, 15).until(
+            ec.visibility_of_element_located((By.XPATH, "//input[@id='login-email']")))
         # username_el = self.driver.find_element(By.XPATH, "//input[@id='login-email']")
-        pass_el = WebDriverWait(self.driver, 15).until(ec.visibility_of_element_located((By.XPATH, "//input[@id='login-password']")))
+        pass_el = WebDriverWait(self.driver, 15).until(
+            ec.visibility_of_element_located((By.XPATH, "//input[@id='login-password']")))
         # pass_el = self.driver.find_element(By.XPATH, "//input[@id='login-password']")
-        btn_login = WebDriverWait(self.driver, 15).until(ec.visibility_of_element_located((By.XPATH, "//button[@id='my-account-action-login']")))
+        btn_login = WebDriverWait(self.driver, 15).until(ec.visibility_of_element_located(
+            (By.XPATH, "//button[@id='my-account-action-login']")))
         # btn_login = self.driver.find_element(By.XPATH, "//button[@id='my-account-action-login']")
 
         username_el.send_keys(username)
@@ -103,9 +107,12 @@ class MM:
                     is_logged = True
                     break
 
-        self.cookie_string = "; ".join([x["name"] + "=" + x["value"] for x in self.driver.get_cookies()])
-        [self.session.cookies.set(c['name'], c['value']) for c in self.driver.get_cookies()]
-        self.user_agent = self.driver.execute_script("return navigator.userAgent;")
+        self.cookie_string = "; ".join(
+            [x["name"] + "=" + x["value"] for x in self.driver.get_cookies()])
+        [self.session.cookies.set(c['name'], c['value'])
+         for c in self.driver.get_cookies()]
+        self.user_agent = self.driver.execute_script(
+            "return navigator.userAgent;")
 
     def check_pre_basket(self, product_link: str):
 
@@ -113,7 +120,8 @@ class MM:
 
         parser = BeautifulSoup(product_link_content.content, 'html.parser')
 
-        product_input = parser.find("input", {"name": "contentSpotInfo-product_detail-top"})
+        product_input = parser.find(
+            "input", {"name": "contentSpotInfo-product_detail-top"})
 
         product_detail = {
             "catEntryId": product_input.attrs['data-catentryid'],
@@ -187,7 +195,7 @@ class MM:
 
             return random.choice(city_response["content"])
 
-    def set_invoice_address(self, il, ilce, mahalle, order_id):
+    def set_invoice_address(self, il, ilce, mahalle, order_id, tc):
 
         url = "https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelOrderSummaryController"
 
@@ -200,7 +208,7 @@ class MM:
             'storeId': self.basket["storeId"],
             'langId': '-14',
             'orderId': order_id,
-            'lastName': last_name,# + "Akok",
+            'lastName': last_name,  # + "Akok",
             'street': mahalle["name"],
             'corporateForm': 'null',
             'district': ilce["name"],
@@ -211,13 +219,13 @@ class MM:
             'defaultCountry': 'TR',
             'loyaltyClubSelected': 'false',
             'salutation': 'Mr',
-            'firstName': first_name,# + "Fatih",
+            'firstName': first_name,  # + "Fatih",
             'formType': 'personal form',
             'loyaltyClubMode': 'register',
             'zip': '22700',
             'mobile': f'+90509{random.randint(1234567,5678901)}',
-            'taxId': '13773032994',
-            'privateTaxId': '13773032994',
+            'taxId': tc,
+            'privateTaxId': tc,
             'isGuestRegistration': 'false',
             'housenumber': '.',
             'city': il["name"],
@@ -310,10 +318,13 @@ class MM:
             print("Teslimat adresi güncellenemedi.")
 
     def remove_product(self):
-        self.driver.get("https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelDisplayBasket")
+        self.driver.get(
+            "https://www.mediamarkt.com.tr/webapp/wcs/stores/servlet/MultiChannelDisplayBasket")
         self.page_is_loading()
 
-        remove_buttons = self.driver.find_elements(By.XPATH, "//button[@class='delete-item']")
+        # remove_buttons = self.driver.find_elements(By.XPATH, "//button[@class='delete-item']")
+        remove_buttons = WebDriverWait(self.driver, 15).until(
+            ec.visibility_of_element_located((By.XPATH, "//button[@class='delete-item']")))
 
         for remove_button in remove_buttons:
             try:

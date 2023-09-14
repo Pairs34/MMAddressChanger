@@ -14,10 +14,24 @@ def changed_emails(mail):
         fmail.write("{}\n".format(mail))
         fmail.close()
 
+
+def remove_changed_mail(mail):
+    with open("maillist.txt", "r+") as f:
+        d = f.readlines()
+        f.seek(0)
+        for i in d:
+            if i != mail:
+                f.write(i)
+        f.truncate()
+
+
 print(f"{len(maillist)} adet kadar mail adresi var")
 
 urun_linki = input(
     "Ürün linki giriniz :") or "https://www.mediamarkt.com.tr/tr/product/_samsung-vr3mb77312k-robot-s%C3%BCp%C3%BCrge-1228770.html"
+
+tcno = input(
+    "Tc numarası giriniz (Varsayılan = 13773032994): ") or "13773032994"
 
 for i, v in enumerate(maillist):
     try:
@@ -40,9 +54,11 @@ for i, v in enumerate(maillist):
 
         order_id = mm.get_order_id()
 
-        mm.set_invoice_address(il=random_city, ilce=random_district, mahalle=random_neighborhood, order_id=order_id)
+        mm.set_invoice_address(il=random_city, ilce=random_district,
+                               mahalle=random_neighborhood, order_id=order_id, tc=tcno)
         mm.set_delivery_address(order_id=order_id)
         changed_emails(email_address)
+        remove_changed_mail()
         mm.remove_product()
         mm.finish()
 
@@ -53,3 +69,4 @@ for i, v in enumerate(maillist):
     except:
         i = i - 1
         traceback.print_exc()
+        input("Devam etmek için bir tuşa basınız")
